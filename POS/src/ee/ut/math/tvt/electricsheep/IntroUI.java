@@ -19,17 +19,30 @@ public class IntroUI extends JFrame {
 	
 	private String introString;
 	private String versionString;
+	private String rawImageLocation;
+	private String imageLocation;
 	
 	public IntroUI() throws FileNotFoundException, IOException {
 	    try(BufferedReader br = new BufferedReader(new FileReader("application.properties"))) {
 	        StringBuilder sb = new StringBuilder();
+	        StringBuilder imageLocationBuilder = new StringBuilder();
 	        sb.append("<html>");
 	        String line = br.readLine();
+	        int linenum1 = 1;
 
 	        while (line != null) {
-	            sb.append(line);
-	            sb.append("<br>");
-	            line = br.readLine();
+	        	if (linenum1 == 4) {
+	        		imageLocationBuilder.append(br.readLine());
+	        		rawImageLocation = imageLocationBuilder.toString();
+	        		String[] parts = rawImageLocation.split(":");
+	        		imageLocation = parts[1];
+	        	}
+	        	else {
+	        		sb.append(line);
+		            sb.append("<br>");
+		            line = br.readLine();
+	        	}
+		        linenum1 += 1;
 	        }
 	        sb.append("<br>");
 	        introString = sb.toString();
@@ -39,14 +52,14 @@ public class IntroUI extends JFrame {
 	    try(BufferedReader br2 = new BufferedReader(new FileReader("version.properties"))) {
 	        StringBuilder sb2 = new StringBuilder();
 	        String line2 = br2.readLine();
-	        int linenum = 0;
+	        int linenum2 = 1;
 
 	        while (line2 != null) {
-	        	if (linenum == 4) {
+	        	if (linenum2 == 5) {
 	        		sb2.append(line2);
 	        	}
 	        	line2 = br2.readLine();
-	        	linenum += 1;
+	        	linenum2 += 1;
 	        }
 	        sb2.append("</html>");
 	        versionString = sb2.toString();
@@ -69,7 +82,8 @@ public class IntroUI extends JFrame {
 		introLabel.setText(introString + versionString);
 		introLabel.setHorizontalAlignment(JLabel.CENTER);
 		
-		ImageIcon image = new ImageIcon("resources/electric_sheep.gif");
+		ImageIcon image = new ImageIcon(imageLocation);
+		System.out.println(imageLocation);
 		JLabel imageLabel = new JLabel();
 		imageLabel.setIcon(image);
 		imageLabel.setHorizontalAlignment(JLabel.CENTER);

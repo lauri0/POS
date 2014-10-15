@@ -11,10 +11,8 @@
 	<property name="doc.dir" value="${build.dir}/doc"/>
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
 	<property name="jar.dir" value="${build.dir}/jar"/>
-	<property name="version.properties" value="${basedir}/version.properties"/>
 	
-	<!-- ###Definitions of classpath variants used for different tasks -->
-
+	<!-- Classpaths -->
 	<path id="compile.classpath">
 		<fileset dir="lib">
 			<include name="*.jar"/>
@@ -29,13 +27,17 @@
 			<include name="*.jar"/>
 		</fileset>
 	</path>
+	
+	<!-- Clean -->
+		<target name="clean" description="Clean up build system results">
+			<delete dir="${build.dir}"/>
+		</target>
 
-	<!-- Definitions of runnable ant targets.
-         Run them from the command line by executing "ant [targetname]"  -->
 	<!-- Run -->
 	<target name="run" depends="dist" description="Run the template application">
 		<java jar="${jar.dir}/ElectricSheep.jar" classpathref="test.classpath" fork="yes" />
 	</target>
+	
 	<!-- Build -->
 	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}"/>
@@ -52,9 +54,8 @@
 			includeantruntime="false">
 			<classpath refid="compile.classpath"/>
 		</javac>
-			
-
 	</target>
+	
 	<!-- Dist -->
 	<target name="dist" depends="build" description="Create the stuff">
 		<mkdir dir="${jar.dir}"/>
@@ -63,10 +64,29 @@
 				<attribute name="Main-Class" value="ee.ut.math.tvt.electricsheep.Intro"/>
 			</manifest>
 		</jar>
-		<propertyfile file="${version.properties}">
+		<loadproperties srcFile="version.properties"/>
+		<propertyfile file="version.properties">
 			<entry key="build.revision.number" type="int" operation="+" value="1"/>
-		</propertyfile>
+			<entry key="build.number" type="string" operation="=" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+			</propertyfile>
 	</target>
+	
+	<target name="junit" depends="dist">
+	        <mkdir dir="${test.reports.dir}"/>
+	        <junit printsummary="yes">
+	            <classpath>
+	                <path refid="classpath"/>
+	                <path refid="application"/>
+	            </classpath>
+	            
+	            <formatter type="xml"/>
+	            
+	            <batchtest fork="yes" todir="${test.reports.dir}">
+	                <fileset dir="${src.dir}" includes="*Test.java"/>
+	            </batchtest>
+	        </junit>
+	    </target>
+	
 	<!-- ###Build internal documentation -->
 	<target name="javadoc" description="Build internal documentation">
 		<mkdir dir="${doc.dir}"/>
@@ -74,11 +94,7 @@
 			<fileset dir="${src.dir}" includes="**/*.java"/>
 		</javadoc>
 	</target>
-
-	<!-- Clean -->
-	<target name="clean" description="Clean up build system results">
-		<delete dir="${build.dir}"/>
-	</target>
+	
 
 </project>
 
