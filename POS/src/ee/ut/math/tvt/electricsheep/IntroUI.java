@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.electricsheep;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -70,13 +72,12 @@ public class IntroUI extends JFrame {
 		ImageIcon image = new ImageIcon("resources/electric_sheep.gif");
 		JLabel imageLabel = new JLabel();
 		imageLabel.setIcon(image);
+		imageLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		panel.add(title);
 		panel.add(imageLabel);
 		panel.add(introLabel);
-		panel.setAlignmentX(title.CENTER_ALIGNMENT);
-		panel.setAlignmentX(introLabel.CENTER_ALIGNMENT);
-		panel.setAlignmentX(imageLabel.CENTER_ALIGNMENT);
+		panel.setBackground(Color.WHITE);
 		
 		this.getContentPane().add(panel);
 		
