@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." name="templateApp" default="build">
+<project basedir="." name="ElectricSheep" default="build">
 
 	<!-- ###Definitions of variables used during the rest of this script -->
-
 	<property file="build.properties"/>
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="build.classes.dir" value="${build.dir}/classes"/>
@@ -11,7 +10,9 @@
 	<property name="conf.dir" value="${basedir}/etc"/>
 	<property name="doc.dir" value="${build.dir}/doc"/>
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
-
+	<property name="jar.dir" value="${build.dir}/jar"/>
+	<property name="version.properties" value="${basedir}/version.properties"/>
+	
 	<!-- ###Definitions of classpath variants used for different tasks -->
 
 	<path id="compile.classpath">
@@ -32,8 +33,8 @@
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
 	<!-- Run -->
-	<target name="run" depends="build" description="Run the template application">
-		<java classname="ee.ut.math.tvt.electricsheep.Intro" classpathref="test.classpath" fork="yes" />
+	<target name="run" depends="dist" description="Run the template application">
+		<java jar="${jar.dir}/ElectricSheep.jar" classpathref="test.classpath" fork="yes" />
 	</target>
 	<!-- Build -->
 	<target name="build" description="Build the system">
@@ -51,9 +52,21 @@
 			includeantruntime="false">
 			<classpath refid="compile.classpath"/>
 		</javac>
+			
 
 	</target>
-
+	<!-- Dist -->
+	<target name="dist" depends="build" description="Create the stuff">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/ElectricSheep.jar" basedir="${build.classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="ee.ut.math.tvt.electricsheep.Intro"/>
+			</manifest>
+		</jar>
+		<propertyfile file="${version.properties}">
+			<entry key="build.revision.number" type="int" operation="+" value="1"/>
+		</propertyfile>
+	</target>
 	<!-- ###Build internal documentation -->
 	<target name="javadoc" description="Build internal documentation">
 		<mkdir dir="${doc.dir}"/>
