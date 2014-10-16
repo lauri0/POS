@@ -81,15 +81,6 @@
 		</propertyfile>
 	</target>
 	
-	
-	<!-- ???Build internal documentation??? -->
-	<target name="javadoc" description="Build internal documentation">
-		<mkdir dir="${doc.dir}"/>
-		<javadoc destdir="${doc.dir}" classpathref="compile.classpath">
-			<fileset dir="${src.dir}" includes="**/*.java"/>
-		</javadoc>
-	</target>
-	
 
 </project>
 
