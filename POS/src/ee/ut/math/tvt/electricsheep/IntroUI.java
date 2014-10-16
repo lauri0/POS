@@ -1,10 +1,8 @@
 package ee.ut.math.tvt.electricsheep;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,7 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
 public class IntroUI extends JFrame {
+	
+	private static final Logger log = Logger.getLogger(IntroUI.class);
 	
 	private String introString;
 	private String versionString;
@@ -23,7 +25,8 @@ public class IntroUI extends JFrame {
 	private String imageLocation;
 	
 	public IntroUI() throws FileNotFoundException, IOException {
-	    try(BufferedReader br = new BufferedReader(new FileReader("application.properties"))) {
+	    try {
+	    	BufferedReader br = new BufferedReader(new FileReader("application.properties"));
 	        StringBuilder sb = new StringBuilder();
 	        StringBuilder imageLocationBuilder = new StringBuilder();
 	        sb.append("<html>");
@@ -46,10 +49,16 @@ public class IntroUI extends JFrame {
 	        }
 	        sb.append("<br>");
 	        introString = sb.toString();
+	        br.close();
 //	        System.out.println(everything);
 	    }
 	    
-	    try(BufferedReader br2 = new BufferedReader(new FileReader("version.properties"))) {
+	    catch (Exception e) {
+	    	log.info("Encountered an error while trying to read from application.properties file.");
+	    }
+	    
+	    try {
+	    	BufferedReader br2 = new BufferedReader(new FileReader("version.properties"));
 	        StringBuilder sb2 = new StringBuilder();
 	        String line2 = br2.readLine();
 	        int linenum2 = 1;
@@ -63,7 +72,12 @@ public class IntroUI extends JFrame {
 	        }
 	        sb2.append("</html>");
 	        versionString = sb2.toString();
+	        br2.close();
 //	        System.out.println(everything);
+	    }
+	    
+	    catch (Exception f) {
+	    	log.info("Encountered an error while trying to read from version.properties file.");
 	    }
 	    
 		setTitle("Intro");
@@ -95,6 +109,7 @@ public class IntroUI extends JFrame {
 		
 		this.getContentPane().add(panel);
 		
+		log.info("Intro window created.");
 		
 	}
 }
