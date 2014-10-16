@@ -45,7 +45,7 @@
 	</target>
 	
 	<!-- Build -->
-	<target name="build" description="Build the system">
+	<target name="build" depends="clean" description="Build the system">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${build.classes.dir}"/>
 		<javac
