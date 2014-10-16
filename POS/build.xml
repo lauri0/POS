@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." name="ElectricSheep" default="build">
 
-	<!-- ###Definitions of variables used during the rest of this script -->
+	<!-- Definitions of variables -->
 	<property file="build.properties"/>
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="build.classes.dir" value="${build.dir}/classes"/>
@@ -11,6 +11,7 @@
 	<property name="doc.dir" value="${build.dir}/doc"/>
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
 	<property name="jar.dir" value="${build.dir}/jar"/>
+	<property name="resources.dir" value="${basedir}/resources"/>
 	
 	<!-- Classpaths -->
 	<path id="compile.classpath">
@@ -34,7 +35,12 @@
 		</target>
 
 	<!-- Run -->
-	<target name="run" depends="dist" description="Run the template application">
+	<target name="run" depends="build" description="Run the application from class">
+			<java classname="ee.ut.math.tvt.electricsheep.Intro" classpathref="test.classpath" fork="yes" />
+		</target>
+	
+	<!-- jrun -->
+	<target name="jrun" depends="dist" description="Run the application from jar">
 		<java jar="${jar.dir}/ElectricSheep.jar" classpathref="test.classpath" fork="yes" />
 	</target>
 	
@@ -59,35 +65,24 @@
 	<!-- Dist -->
 	<target name="dist" depends="build" description="Create the stuff">
 		<mkdir dir="${jar.dir}"/>
-		<jar destfile="${jar.dir}/ElectricSheep.jar" basedir="${build.classes.dir}">
+		<jar destfile="${jar.dir}/ElectricSheep.jar" update="True">
 			<manifest>
 				<attribute name="Main-Class" value="ee.ut.math.tvt.electricsheep.Intro"/>
 			</manifest>
+			<fileset dir="${build.classes.dir}"/>
+			<fileset dir="${resources.dir}"/>
+			<fileset file="${basedir}/version.properties"/>
+			<fileset file="${basedir}/application.properties"/>
 		</jar>
 		<loadproperties srcFile="version.properties"/>
 		<propertyfile file="version.properties">
 			<entry key="build.revision.number" type="int" operation="+" value="1"/>
 			<entry key="build.number" type="string" operation="=" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
-			</propertyfile>
+		</propertyfile>
 	</target>
 	
-	<target name="junit" depends="dist">
-	        <mkdir dir="${test.reports.dir}"/>
-	        <junit printsummary="yes">
-	            <classpath>
-	                <path refid="classpath"/>
-	                <path refid="application"/>
-	            </classpath>
-	            
-	            <formatter type="xml"/>
-	            
-	            <batchtest fork="yes" todir="${test.reports.dir}">
-	                <fileset dir="${src.dir}" includes="*Test.java"/>
-	            </batchtest>
-	        </junit>
-	    </target>
 	
-	<!-- ###Build internal documentation -->
+	<!-- ???Build internal documentation??? -->
 	<target name="javadoc" description="Build internal documentation">
 		<mkdir dir="${doc.dir}"/>
 		<javadoc destdir="${doc.dir}" classpathref="compile.classpath">
