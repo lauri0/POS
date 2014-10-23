@@ -65,6 +65,11 @@
 	<!-- Dist -->
 	<target name="dist" depends="build" description="Create the stuff">
 		<mkdir dir="${jar.dir}"/>
+		<loadproperties srcFile="version.properties"/>
+		<propertyfile file="version.properties">
+			<entry key="build.revision.number" type="int" operation="+" value="1"/>
+			<entry key="build.number" type="string" operation="=" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+		</propertyfile>
 		<jar destfile="${jar.dir}/ElectricSheep.jar" update="True">
 			<manifest>
 				<attribute name="Main-Class" value="ee.ut.math.tvt.electricsheep.Intro"/>
@@ -73,12 +78,11 @@
 			<fileset dir="${resources.dir}"/>
 			<fileset file="${basedir}/version.properties"/>
 			<fileset file="${basedir}/application.properties"/>
+			<fileset dir="${basedir}/etc"/>
+			<zipgroupfileset dir="${basedir}/lib">
+				<include name="*.jar"/>
+			</zipgroupfileset>
 		</jar>
-		<loadproperties srcFile="version.properties"/>
-		<propertyfile file="version.properties">
-			<entry key="build.revision.number" type="int" operation="+" value="1"/>
-			<entry key="build.number" type="string" operation="=" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
-		</propertyfile>
 	</target>
 	
 

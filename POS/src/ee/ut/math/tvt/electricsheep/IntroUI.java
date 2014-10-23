@@ -32,7 +32,7 @@ public class IntroUI extends JFrame {
 	        sb.append("<html>");
 	        String line = br.readLine();
 	        int linenum1 = 1;
-
+	        
 	        while (line != null) {
 	        	if (linenum1 == 4) {
 	        		imageLocationBuilder.append(br.readLine());
@@ -73,7 +73,6 @@ public class IntroUI extends JFrame {
 	        sb2.append("</html>");
 	        versionString = sb2.toString();
 	        br2.close();
-//	        System.out.println(everything);
 	    }
 	    
 	    catch (Exception f) {
@@ -91,13 +90,11 @@ public class IntroUI extends JFrame {
 		title.setHorizontalAlignment(JLabel.CENTER);
 		
 		JLabel introLabel = new JLabel();
-		System.out.println(versionString);
 		introLabel.setFont(new Font("Serif", Font.BOLD, 26));
 		introLabel.setText(introString + versionString);
 		introLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		ImageIcon image = new ImageIcon(imageLocation);
-		System.out.println(imageLocation);
 		JLabel imageLabel = new JLabel();
 		imageLabel.setIcon(image);
 		imageLabel.setHorizontalAlignment(JLabel.CENTER);
