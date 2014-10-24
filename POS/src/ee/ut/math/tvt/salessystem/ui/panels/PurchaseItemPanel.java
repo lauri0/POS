@@ -227,6 +227,8 @@ public class PurchaseItemPanel extends JPanel {
             else {
 	            model.getCurrentPurchaseTableModel()
 	                .addItem(new SoldItem(stockItem, quantity));
+	            // Warehouse quantity is reduced
+	            stockItem.setQuantity(stockItem.getQuantity()-quantity);
             }
         }
     }
