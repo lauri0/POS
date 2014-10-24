@@ -3,13 +3,43 @@ package ee.ut.math.tvt.electricsheep;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.WindowConstants;
+import org.apache.log4j.Logger;
+
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
+import ee.ut.math.tvt.salessystem.ui.ConsoleUI;
+import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 
 public class Intro {
-// oleme lambakesed
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		final IntroUI ui = new IntroUI();
+
+private static final Logger log = Logger.getLogger(Intro.class);
+private static final String MODE = "console";
+
+public static void main(String[] args) throws FileNotFoundException, IOException {
+
+	final SalesDomainController domainController = new SalesDomainControllerImpl();
+
+	if (args.length == 1 && args[0].equals(MODE)) {
+		log.debug("Mode: " + MODE);
+
+		ConsoleUI cui = new ConsoleUI(domainController);
+		cui.run();
+	} else {
+
+		IntroUI introUI = new IntroUI();
+		introUI.setVisible(true);
+		introUI.setAlwaysOnTop(true);
+
+		final SalesSystemUI ui = new SalesSystemUI(domainController);
 		ui.setVisible(true);
-		ui.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+		introUI.setAlwaysOnTop(false);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		introUI.setVisible(false);
 	}
+}
 }
