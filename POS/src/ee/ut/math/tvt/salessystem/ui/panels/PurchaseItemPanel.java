@@ -215,21 +215,28 @@ public class PurchaseItemPanel extends JPanel {
             int quantity;
             try {
                 quantity = Integer.parseInt(quantityField.getText());
+                if (quantity > stockItem.getQuantity()) {
+                	showQuantityWarning();
+                	reset();	
+                }
+                else {
+    	            model.getCurrentPurchaseTableModel()
+    	                .addItem(new SoldItem(stockItem, quantity));
+    	            // Warehouse quantity is reduced
+    	            stockItem.setQuantity(stockItem.getQuantity()-quantity);
+                }
             } catch (NumberFormatException ex) {
-                quantity = 1;
+            	JDialog warningMessageBox = new JDialog();
+				warningMessageBox.setAlwaysOnTop(true);
+				warningMessageBox.setTitle("Warning");
+				warningMessageBox.add(new JLabel("<html><center>Incorrect "
+						+ "quantity!</center></html>"));
+				warningMessageBox.setBounds(550, 350, 180, 100);
+				warningMessageBox.setVisible(true);
             }
             //if inserted quantity is higher than in the warehouse
-            //product is not added to the cart, warning is shown
-            if (quantity > stockItem.getQuantity()) {
-            	showQuantityWarning();
-            	reset();	
-            }
-            else {
-	            model.getCurrentPurchaseTableModel()
-	                .addItem(new SoldItem(stockItem, quantity));
-	            // Warehouse quantity is reduced
-	            stockItem.setQuantity(stockItem.getQuantity()-quantity);
-            }
+            //product is not added to the cart, warning is shown -Kristine
+            
         }
     }
 
