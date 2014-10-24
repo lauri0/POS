@@ -20,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -217,11 +218,29 @@ public class PurchaseItemPanel extends JPanel {
             } catch (NumberFormatException ex) {
                 quantity = 1;
             }
-            model.getCurrentPurchaseTableModel()
-                .addItem(new SoldItem(stockItem, quantity));
+            //if inserted quantity is higher than in the warehouse
+            //product is not added to the cart, warning is shown
+            if (quantity > stockItem.getQuantity()) {
+            	showQuantityWarning();
+            	reset();	
+            }
+            else {
+	            model.getCurrentPurchaseTableModel()
+	                .addItem(new SoldItem(stockItem, quantity));
+            }
         }
     }
 
+    public void showQuantityWarning() {
+    	JDialog warningMessageBox = new JDialog();
+    	warningMessageBox.setAlwaysOnTop(true);
+    	warningMessageBox.setTitle("Warning");
+    	warningMessageBox.add(new JLabel("<html><center>There is not enough "
+    			+ "product<br> in the warehouse.</center></html>"));
+    	warningMessageBox.setBounds(550, 350, 180, 100);
+    	warningMessageBox.setVisible(true);
+    	
+    }
     /**
      * Sets whether or not this component is enabled.
      */
