@@ -72,7 +72,7 @@ public class PurchaseItemPanel extends JPanel {
         basketPane.setLayout(new GridBagLayout());
         basketPane.setBorder(BorderFactory.createTitledBorder("Shopping cart"));
 
-        // Create the table, put it inside a scollPane,
+        // Create the table, put it inside a scrollPane,
         // and add the scrollPane to the basketPanel.
         JTable table = new JTable(model.getCurrentPurchaseTableModel());
         JScrollPane scrollPane = new JScrollPane(table);
@@ -90,10 +90,10 @@ public class PurchaseItemPanel extends JPanel {
         panel.setLayout(new GridLayout(6, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
         
-        // Initlialize the drop-down menu
+        // Initlialize the drop-down menu -Kristine
         dropDownMenu = new JComboBox<String>();
         
-        // Fill the drop-down menu
+        // Fill the drop-down menu -Kristine
         StockTableModel stockModel = model.getWarehouseTableModel();
     	List<StockItem> items = stockModel.getTableRows();
     	for (StockItem stockItem : items) {
@@ -106,7 +106,7 @@ public class PurchaseItemPanel extends JPanel {
         nameField = new JTextField();
         priceField = new JTextField();
 
-        // Fill the dialog fields if an item is selected from the drop-down menu 
+        // Fill the dialog fields if an item is selected from the drop-down menu -Kristine 
         dropDownMenu.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
@@ -122,7 +122,7 @@ public class PurchaseItemPanel extends JPanel {
 
         // == Add components to the panel
         
-        // - drop-down menu
+        // - drop-down menu -Kristine
         panel.add(new JLabel("Choose:"));
         panel.add(dropDownMenu);
         
@@ -155,6 +155,8 @@ public class PurchaseItemPanel extends JPanel {
         return panel;
     }
     // Method to add items to the drop-down menu, just in case
+    // Perhaps it would be better to use the function to fill the menu
+    // -Kristine
     public void fillDropDownMenu(){
     	StockTableModel stockModel = model.getWarehouseTableModel();
     	List<StockItem> items = stockModel.getTableRows();
@@ -179,7 +181,7 @@ public class PurchaseItemPanel extends JPanel {
     }
     
     // Search the id of the item selected, then find the item
-    // using the barcode
+    // using the barcode, changed this function -Kristine
     private StockItem getStockItemByBarcode() {
         try {
         	String name = (String) dropDownMenu.getSelectedItem();
