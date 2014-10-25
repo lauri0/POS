@@ -1,18 +1,28 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -152,7 +162,7 @@ public class PurchaseTab {
 
   /**  Event handler for the <code>cancel purchase</code> event. */
   protected void cancelPurchaseButtonClicked() {
-    log.info("Sale cancelled");
+    log.info("Order cancelled");
     try {
       domainController.cancelCurrentPurchase();
       endSale();
@@ -165,20 +175,35 @@ public class PurchaseTab {
 
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
-    log.info("Sale complete");
-    try {
-      log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-      domainController.submitCurrentPurchase(
-          model.getCurrentPurchaseTableModel().getTableRows()
-      );
-      endSale();
-      model.getCurrentPurchaseTableModel().clear();
-    } catch (VerificationFailedException e1) {
-      log.error(e1.getMessage());
-    }
+	  drawPaymentWindow();
+	  duringSale();
+	  log.info("Order confirmed");
+  }
+  
+  // Gets called when the purchase is accepted - Lauri
+  protected void closePaymentButtonClicked(JDialog dialog) {
+ 	  try {
+ 		  log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
+ 		  domainController.submitCurrentPurchase(
+ 				  model.getCurrentPurchaseTableModel().getTableRows()
+ 				  );
+ 		  endSale();
+ 		  model.getCurrentPurchaseTableModel().clear();
+ 		  log.info("Payment successful");
+ 	  } 
+ 	  catch (VerificationFailedException e1) {
+ 		  log.error(e1.getMessage());
+ 		  log.info("Payment failed");
+ 	  }
+ 	  dialog.dispose();
   }
 
-
+  // Gets called when the purchase is cancelled via the payment window - Lauri
+  protected void cancelPaymentButtonClicked(JDialog dialog) {
+	  log.info("Payment cancelled");
+	  dialog.dispose();
+	  startNewSale();
+  }
 
   /* === Helper methods that bring the whole purchase-tab to a certain state
    *     when called.
@@ -203,8 +228,24 @@ public class PurchaseTab {
     newPurchase.setEnabled(true);
     purchasePane.setEnabled(false);
   }
-
-
+  
+  private void duringSale() {
+	purchasePane.reset();
+	  
+	cancelPurchase.setEnabled(false);
+	submitPurchase.setEnabled(false);
+	newPurchase.setEnabled(false);
+	purchasePane.setEnabled(false);
+  }
+  
+  private void allowClosePayment(JButton closeButton, JButton acceptButton) {
+	  closeButton.setEnabled(true);
+	  acceptButton.setEnabled(false);
+  }
+  
+  private void disallowClosePayment(JButton closeButton) {
+	  closeButton.setEnabled(false);
+  }  
 
 
   /* === Next methods just create the layout constraints objects that control the
@@ -249,5 +290,85 @@ public class PurchaseTab {
 
     return gc;
   }
+  
+//A window that allows one to pay for their order - Lauri
+	
+	private void drawPaymentWindow() {
+		// Create buttons, a label and a text field
+		final JTextField paymentAmountField = new JTextField();
+		final JButton acceptPaymentButton = new JButton("Attempt to pay");
+		final JButton cancelPaymentButton = new JButton("Cancel");
+		final JButton closePaymentButton = new JButton("Finish");
+		closePaymentButton.setEnabled(false);
+		final JLabel changeLabel = new JLabel("0");
+		
+		// Create the panel
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(5, 2));
+		panel.setBorder(BorderFactory.createTitledBorder("Payment"));
+
+		// Find the total sum of the order
+		List<SoldItem> items = model.getCurrentPurchaseTableModel().getTableRows();
+		int totalSum = 0;
+		for (SoldItem item : items) {
+			totalSum += item.getSum();
+		}
+		
+		final int finalTotalSum = totalSum;
+		
+		panel.add(new JLabel("Sum:"));
+		panel.add(new JLabel(Integer.toString(finalTotalSum)));
+
+		panel.add(new JLabel("Payment:"));
+		panel.add(paymentAmountField);
+		
+		panel.add(new JLabel("Change:"));
+		panel.add(changeLabel);
+		
+		panel.add(acceptPaymentButton);
+		panel.add(cancelPaymentButton);
+		
+		panel.add(closePaymentButton);
+
+		// Create the payment window and add the panel to its
+		final JDialog payWindow = new JDialog();
+		payWindow.setAlwaysOnTop(true);
+		payWindow.setTitle("Pay for your order");
+		payWindow.add(panel);
+		payWindow.setBounds(550, 350, 400, 300);
+		payWindow.setVisible(true);
+		
+		// Add listeners to buttons
+		cancelPaymentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancelPaymentButtonClicked(payWindow);
+			}
+		});
+		
+		closePaymentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				closePaymentButtonClicked(payWindow);
+			}
+		});
+
+		acceptPaymentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (Integer.parseInt(paymentAmountField.getText()) >= finalTotalSum) {
+						changeLabel.setText(Integer.toString(Integer.parseInt(paymentAmountField.getText()) - finalTotalSum));
+						allowClosePayment(closePaymentButton, acceptPaymentButton);
+					}
+					else {
+						disallowClosePayment(closePaymentButton);
+					}
+				}
+				catch (Exception f) {
+					
+				}
+			}
+		});
+		
+		
+	}
 
 }
