@@ -131,7 +131,7 @@
 		/>
 		<exec executable="cmd">
 			<arg value='/c'/>
-			<arg value='git tag -a ${tag.name} "${tag.comment}"'/>
+			<arg value='git tag -a ${tag.name} -m "${tag.comment}"'/>
 		</exec>
 		<exec executable="cmd">
 			<arg value='/c'/>
