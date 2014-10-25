@@ -16,7 +16,7 @@ import javax.swing.table.JTableHeader;
 
 /**
  * Encapsulates everything that has to do with the history tab (the tab
- * labelled "History" in the menu).
+ * labeled "History" in the menu).
  */
 public class HistoryTab {
     
@@ -50,14 +50,13 @@ public class HistoryTab {
 		return panel;
     }
     
-	// table of the warehouse stock
+	// History table
 	private Component drawHistoryMainPane() {
 		JPanel panel = new JPanel();
-		System.out.println(model.getWarehouseTableModel().toString());
+//		System.out.println(model.getHistoryTableModel().toString());
 
 		try {
-		JTable table = new JTable(model.getWarehouseTableModel());
-
+		JTable table = new JTable(model.getHistoryTableModel());
 
 		JTableHeader header = table.getTableHeader();
 		header.setReorderingAllowed(false);
@@ -77,7 +76,7 @@ public class HistoryTab {
 		catch (Exception e) {
 		
 		}
-		panel.setBorder(BorderFactory.createTitledBorder("Warehouse status"));
+		panel.setBorder(BorderFactory.createTitledBorder("History"));
 		return panel;
 	}
 }
