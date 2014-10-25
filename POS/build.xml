@@ -89,7 +89,18 @@
 			</zipgroupfileset>
 		</jar>
 	</target>
-	
-
+	<target name="git_commit">
+		<input
+			message="Please enter the commit comment:"
+			addproperty="commit.comment"
+			defaultvalue="No comment."
+		/>
+		<exec executable="cmd">
+		<arg value='/c'/>
+		<arg value='git add -A'/>
+		<arg value='git commit -m "${commit.comment}"'/>
+		<arg value='git push'/>
+		</exec>
+	</target>
 </project>
 
