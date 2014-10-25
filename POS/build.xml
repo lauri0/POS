@@ -89,6 +89,8 @@
 			</zipgroupfileset>
 		</jar>
 	</target>
+	
+	<!-- Commit -->
 	<target name="git_commit">
 		<input
 			message="Please enter the commit comment:"
@@ -105,17 +107,36 @@
 		/>
 		<exec executable="cmd">
 			<arg value='/c'/>
-			<arg value="git add -A"/>
+			<arg value='git add -A'/>
 		</exec>
 		<exec executable="cmd">
-			<arg value="/c"/>
+			<arg value='/c'/>
 			<arg value='git commit -m "${commit.comment}"'/>
 		</exec>
 		<exec executable="cmd">
-			<arg value="/c"/>
+			<arg value='/c'/>
 			<arg value='git push https://${commit.username}:${commit.password}@github.com/lauri0/POS.git'/>
 		</exec>
-
+	</target>
+	
+	<!-- Tag -->
+	<target name="git_tag">
+		<input
+			message="Please enter the tag name:"
+			addproperty="tag.name"
+		/>
+		<input
+			message="Please enter the tag comment:"
+			addproperty="tag.comment"
+		/>
+		<exec executable="cmd">
+			<arg value='/c'/>
+			<arg value='git tag -a ${tag.name} "${tag.comment}"'/>
+		</exec>
+		<exec executable="cmd">
+			<arg value='/c'/>
+			<arg value='git push --tags'/>
+		</exec>
 	</target>
 </project>
 
