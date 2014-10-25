@@ -111,6 +111,10 @@
 			<arg value="/c"/>
 			<arg value='git commit -m "${commit.comment}"'/>
 		</exec>
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value='git push https://${commit.username}:${commit.password}@github.com/lauri0/POS.git'/>
+		</exec>
 
 	</target>
 </project>
