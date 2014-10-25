@@ -3,12 +3,16 @@ package ee.ut.math.tvt.electricsheep;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.ui.ConsoleUI;
 import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
+
+import javax.swing.JFrame;
+
 
 public class Intro {
 
@@ -33,6 +37,7 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 		final SalesSystemUI ui = new SalesSystemUI(domainController);
 		ui.setVisible(true);
 
+
 		introUI.setAlwaysOnTop(false);
 		try {
 			Thread.sleep(3000);
@@ -40,6 +45,9 @@ public static void main(String[] args) throws FileNotFoundException, IOException
 			e.printStackTrace();
 		}
 		introUI.setVisible(false);
+
+		ui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 }
 }

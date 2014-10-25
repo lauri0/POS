@@ -95,7 +95,7 @@ public class StockTab {
 		});
 		return panel;
 	}
-// Adding existing item to the warehouse
+// Adding existing item to the warehouse -Kristine
 	
 	private void drawAddExistingItemWindow() {
 		final JTextField barCodeField;
@@ -159,7 +159,7 @@ public class StockTab {
 	}
 
 	// This should be somehow reorganized -Kristine
-	// Adding item to the warehouse -Kristine
+	// Adding new item to the warehouse -Kristine
 	private void drawAddItemWindow() {
 		final JTextField barCodeField;
 		final JTextField quantityField;

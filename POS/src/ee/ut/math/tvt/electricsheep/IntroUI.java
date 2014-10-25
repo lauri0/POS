@@ -1,12 +1,15 @@
 package ee.ut.math.tvt.electricsheep;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -26,8 +29,8 @@ public class IntroUI extends JFrame {
 	
 	public IntroUI() throws FileNotFoundException, IOException {
 	    try {
-	    	BufferedReader br = new BufferedReader(new FileReader("application.properties"));
-	        StringBuilder sb = new StringBuilder();
+	    	BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/application.properties")));
+	    	StringBuilder sb = new StringBuilder();
 	        StringBuilder imageLocationBuilder = new StringBuilder();
 	        sb.append("<html>");
 	        String line = br.readLine();
@@ -50,7 +53,6 @@ public class IntroUI extends JFrame {
 	        sb.append("<br>");
 	        introString = sb.toString();
 	        br.close();
-//	        System.out.println(everything);
 	    }
 	    
 	    catch (Exception e) {
@@ -58,7 +60,7 @@ public class IntroUI extends JFrame {
 	    }
 	    
 	    try {
-	    	BufferedReader br2 = new BufferedReader(new FileReader("version.properties"));
+	    	BufferedReader br2 = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/version.properties")));
 	        StringBuilder sb2 = new StringBuilder();
 	        String line2 = br2.readLine();
 	        int linenum2 = 1;
@@ -80,7 +82,7 @@ public class IntroUI extends JFrame {
 	    }
 	    
 		setTitle("Intro");
-		setSize(800, 800);
+		setMinimumSize(new Dimension(600, 875));
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3, 1));
 		
@@ -94,15 +96,21 @@ public class IntroUI extends JFrame {
 		introLabel.setText(introString + versionString);
 		introLabel.setHorizontalAlignment(JLabel.CENTER);
 		
-		ImageIcon image = new ImageIcon(imageLocation);
-		JLabel imageLabel = new JLabel();
-		imageLabel.setIcon(image);
-		imageLabel.setHorizontalAlignment(JLabel.CENTER);
+		try {
+			ImageIcon image = new ImageIcon(imageLocation);
+			JLabel imageLabel = new JLabel();
+			imageLabel.setIcon(image);
+			imageLabel.setHorizontalAlignment(JLabel.CENTER);
 		
-		panel.add(title);
-		panel.add(imageLabel);
-		panel.add(introLabel);
-		panel.setBackground(Color.WHITE);
+			panel.add(title);
+			panel.add(imageLabel);
+			panel.add(introLabel);
+			panel.setBackground(Color.WHITE);
+		}
+		
+		catch (Exception g) {
+			log.info("Encountered an error when loading the image file.");	
+		}
 		
 		this.getContentPane().add(panel);
 		
