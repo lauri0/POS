@@ -129,13 +129,21 @@
 			message="Please enter the tag comment:"
 			addproperty="tag.comment"
 		/>
+		<input 
+			message="Please enter your github username:"
+			addproperty="tag.username"
+		/>
+		<input
+			message="Please enter your github password:"
+			addproperty="tag.password"
+		/>
 		<exec executable="cmd">
 			<arg value='/c'/>
 			<arg value='git tag -a ${tag.name} -m "${tag.comment}"'/>
 		</exec>
 		<exec executable="cmd">
 			<arg value='/c'/>
-			<arg value='git push --tags'/>
+			<arg value='git push https://${tag.username}:${tag.password}@github.com/lauri0/POS.git --tags'/>
 		</exec>
 	</target>
 </project>
