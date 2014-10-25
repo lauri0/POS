@@ -28,7 +28,6 @@ public class IntroUI extends JFrame {
 	private String imageLocation;
 	
 	public IntroUI() throws FileNotFoundException, IOException {
-		log.info(new File(".").getAbsolutePath());
 	    try {
 	    	BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/application.properties")));
 	    	StringBuilder sb = new StringBuilder();

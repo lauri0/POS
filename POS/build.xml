@@ -48,6 +48,11 @@
 	<target name="build" depends="clean" description="Build the system">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${build.classes.dir}"/>
+		<copy file="${basedir}/version.properties" todir="${build.classes.dir}"/>
+		<copy file="${basedir}/application.properties" todir="${build.classes.dir}"/>
+		<copy todir="${build.classes.dir}">
+			<fileset dir="${resources.dir}"/>
+		</copy>
 		<javac
             srcdir="${src.dir}"
             destdir="${build.classes.dir}"
