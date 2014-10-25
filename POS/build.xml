@@ -104,12 +104,12 @@
 			addproperty="commit.password"
 		/>
 		<exec executable="cmd">
-		<arg value='/c'/>
-		<arg value="git add -A"/>
+			<arg value='/c'/>
+			<arg value="git add -A"/>
 		</exec>
 		<exec executable="cmd">
 			<arg value="/c"/>
-			<arg value='git commit -m \" ${commit.comment} \"'/>
+			<arg value='git commit -m "${commit.comment}"'/>
 		</exec>
 
 	</target>
