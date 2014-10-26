@@ -4,6 +4,8 @@ import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.Purchase;
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
@@ -14,8 +16,10 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -32,26 +36,18 @@ public class OrderDetailsUI extends JFrame {
 
 	private SalesSystemModel model;
 	private Purchase purchase;
-	
-	// Instances of tab classes
-	private PurchaseTab purchaseTab;
-	private HistoryTab historyTab;
-	private StockTab stockTab;
 
   /**
-   * Constructs sales system GUI.
-   * @param domainController Sales domain controller.
+   * Constructs the order details window.
+   * @param model Sales system model.
+   * @param purchase Order that is being viewed in detail.
    */
 	public OrderDetailsUI(SalesSystemModel model, Purchase purchase) {
 		this.model = model;
 		this.purchase = purchase;
 
-		// Create singleton instances of the tab classes
-		historyTab = new HistoryTab(model);
-		stockTab = new StockTab(model);
-//		purchaseTab = new PurchaseTab(domainController, model);
-
 		setTitle("Order details");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		// set L&F to the nice Windows style
 		try {
@@ -61,35 +57,32 @@ public class OrderDetailsUI extends JFrame {
 			log.warn(e1.getMessage());
 		}
 
-		drawWidgets();
+		drawTable();
 
 		// size & location
-		int width = 400;
+		int width = 500;
 		int height = 300;
 		setSize(width, height);
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((screen.width - width) / 2, (screen.height - height) / 2);
-
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
 		
 		this.setVisible(true);
 	}
 
-	private void drawWidgets() {
-/*		JTabbedPane tabbedPane = new JTabbedPane();
-
-		tabbedPane.add("Point-of-sale", purchaseTab.draw());
-		tabbedPane.add("Warehouse", stockTab.draw());
-		tabbedPane.add("History", historyTab.draw());
-
-		getContentPane().add(tabbedPane);*/
+	private void drawTable() {
+		try {
+			final PurchaseInfoTableModel tableModel = new PurchaseInfoTableModel();
+			for (SoldItem item : purchase.getSoldItems()) {
+				tableModel.addItem(item);
+			}
+			final JTable table = new JTable(tableModel);
+			this.add(table);
+			
+		}
+		catch (Exception e) {
+			log.info("Encountered an exception while attempting to draw order info table.");
+		}
 	}
-
 }
 
 
