@@ -184,8 +184,11 @@ public class PurchaseTab {
   protected void closePaymentButtonClicked(JDialog dialog) {
  	  try {
  		  log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
+ 		  // Finds the number of previous entries in the history tab
+ 		  // Needed to assign an id to the purchase
+ 		  long id = model.getHistoryTableModel().getRowCount();
  		  model.getHistoryTableModel().addItem(domainController.submitCurrentPurchase(
- 				  model.getCurrentPurchaseTableModel().getTableRows()
+ 				  model.getCurrentPurchaseTableModel().getTableRows(), id
  				  ));
  		  endSale();
  		  model.getCurrentPurchaseTableModel().clear();

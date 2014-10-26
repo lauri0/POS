@@ -15,7 +15,7 @@ import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 public class SalesDomainControllerImpl implements SalesDomainController {
 	
 	// A method that returns a Purchase type object - Lauri
-	public Purchase submitCurrentPurchase(List<SoldItem> goods) 
+	public Purchase submitCurrentPurchase(List<SoldItem> goods, long id) 
 			throws VerificationFailedException {
 		// XXX - Save purchase
 		// Find the total price of bought goods
@@ -25,7 +25,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		}
 		// Using a cast
 		ArrayList<SoldItem> goodsList = (ArrayList<SoldItem>) goods;
-		Purchase purchase = new Purchase(goodsList, sum);
+		Purchase purchase = new Purchase(goodsList, sum, id);
 		return purchase;
 	}
 

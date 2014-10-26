@@ -48,7 +48,7 @@ public interface SalesDomainController {
      *            Goods that the buyer has chosen to buy.
      * @throws VerificationFailedException
      */
-    public Purchase submitCurrentPurchase(List<SoldItem> goods) 
+    public Purchase submitCurrentPurchase(List<SoldItem> goods, long id) 
     		throws VerificationFailedException;
 
     

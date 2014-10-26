@@ -1,12 +1,16 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.ui.OrderDetailsUI;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -55,7 +59,19 @@ public class HistoryTab {
 		JPanel panel = new JPanel();
 
 		try {
-			JTable table = new JTable(model.getHistoryTableModel());
+			final JTable table = new JTable(model.getHistoryTableModel());
+			
+			// Adds a MouseListener to the table
+			// This is necessary to display additional information about the specific order in history
+			table.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					// Only row (not the column) is needed to identify the order
+					int row = table.getSelectedRow();
+					// Creates the window with additional information about the order
+					OrderDetailsUI orderUI = new OrderDetailsUI(model,
+							model.getHistoryTableModel().getItemById((long) row));
+				}
+			});
 
 			JTableHeader header = table.getTableHeader();
 			header.setReorderingAllowed(false);

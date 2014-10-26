@@ -16,7 +16,8 @@ public class Purchase implements Cloneable, DisplayableItem {
     private double totalPrice;
     private ArrayList<SoldItem> soldItems;
     
-    public Purchase(ArrayList<SoldItem> soldItems, double totalPrice) {
+    public Purchase(ArrayList<SoldItem> soldItems, double totalPrice, long id) {
+    	this.id = id;
     	Date date = new Date();
     	SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
