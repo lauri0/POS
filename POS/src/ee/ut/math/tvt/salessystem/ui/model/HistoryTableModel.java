@@ -15,8 +15,7 @@ public class HistoryTableModel extends SalesSystemTableModel<Purchase> {
 	private static final Logger log = Logger.getLogger(HistoryTableModel.class);
 	
 	public HistoryTableModel() {
-		// Added the String "sum" to this list, to display the final sum -Kristine
-		super(new String[] { "Date", "Time", "Total price"});
+		super(new String[] {"Id", "Date", "Time", "Total price"});
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class HistoryTableModel extends SalesSystemTableModel<Purchase> {
 		case 2:
 			return purchase.getTime();
 		case 3:
-			return purchase.getSoldItems();
+			return purchase.getTotalPrice();
 		}
 		throw new IllegalArgumentException("Column index out of range");
 	}
@@ -46,7 +45,7 @@ public class HistoryTableModel extends SalesSystemTableModel<Purchase> {
 			buffer.append(purchase.getId() + "\t");
 			buffer.append(purchase.getDate() + "\t");
 			buffer.append(purchase.getTime() + "\t");
-			buffer.append(purchase.getSoldItems() + "\t");
+			buffer.append(purchase.getTotalPrice() + "\t");
 			buffer.append("\n");
 		}
 
@@ -57,13 +56,8 @@ public class HistoryTableModel extends SalesSystemTableModel<Purchase> {
      * Add new Purchase to table.
      */
     public void addItem(final Purchase purchase) {
-        /**
-         * XXX In case such stockItem already exists increase the quantity of the
-         * existing stock.
-         */
-        
         rows.add(purchase);
-        log.debug("Added a new purchase to history");
+        log.info("Added a new purchase to history");
         fireTableDataChanged();
     }
 }

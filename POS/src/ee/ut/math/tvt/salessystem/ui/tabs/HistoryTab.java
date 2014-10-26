@@ -53,29 +53,29 @@ public class HistoryTab {
 	// History table
 	private Component drawHistoryMainPane() {
 		JPanel panel = new JPanel();
-//		System.out.println(model.getHistoryTableModel().toString());
 
 		try {
-		JTable table = new JTable(model.getHistoryTableModel());
+			JTable table = new JTable(model.getHistoryTableModel());
 
-		JTableHeader header = table.getTableHeader();
-		header.setReorderingAllowed(false);
+			JTableHeader header = table.getTableHeader();
+			header.setReorderingAllowed(false);
 
-		JScrollPane scrollPane = new JScrollPane(table);
+			JScrollPane scrollPane = new JScrollPane(table);
 
-		GridBagConstraints gc = new GridBagConstraints();
-		GridBagLayout gb = new GridBagLayout();
-		gc.fill = GridBagConstraints.BOTH;
-		gc.weightx = 1.0;
-		gc.weighty = 1.0;
+			GridBagConstraints gc = new GridBagConstraints();
+			GridBagLayout gb = new GridBagLayout();
+			gc.fill = GridBagConstraints.BOTH;
+			gc.weightx = 1.0;
+			gc.weighty = 1.0;
 
-		panel.setLayout(gb);
-		panel.add(scrollPane, gc);
+			panel.setLayout(gb);
+			panel.add(scrollPane, gc);
 
 		}
 		catch (Exception e) {
-		
+			// TODO
 		}
+		
 		panel.setBorder(BorderFactory.createTitledBorder("History"));
 		return panel;
 	}

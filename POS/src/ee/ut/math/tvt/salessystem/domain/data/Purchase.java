@@ -11,42 +11,39 @@ import java.util.Date;
 public class Purchase implements Cloneable, DisplayableItem {
 
 	private long id;
-    private String date;
-    private String time;
+    private String pdate;
+    private String ptime;
     private double totalPrice;
     private ArrayList<SoldItem> soldItems;
     
-    // Placeholder implementation, needs something for soldItems list and totalPrice
-    public Purchase() {
+    public Purchase(ArrayList<SoldItem> soldItems, double totalPrice) {
     	Date date = new Date();
     	SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-        this.date = dateFormat.format(date);
-        this.time = timeFormat.format(time);
-        // Placeholder for testing
-        this.totalPrice = 30;
-        // Placeholder for testing
-        this.soldItems = null;
-        
+        this.pdate = dateFormat.format(date);
+        this.ptime = timeFormat.format(date);
+        this.totalPrice = totalPrice;
+        this.soldItems = soldItems;
     }
+    
     public Long getId() {
     	return id;
     }
     
     public String getDate() {
-        return date;
+        return pdate;
     }
     
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(String pdate) {
+        this.pdate = pdate;
     }
     
     public String getTime() {
-        return time;
+        return ptime;
     }
     
     public void setTime(String time) {
-        this.time = time;
+        this.ptime = ptime;
     }
     
     public double getTotalPrice() {

@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
- * labelled "Point-of-sale" in the menu).
+ * labeled "Point-of-sale" in the menu).
  */
 public class PurchaseTab {
 
@@ -184,9 +184,9 @@ public class PurchaseTab {
   protected void closePaymentButtonClicked(JDialog dialog) {
  	  try {
  		  log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
- 		  domainController.submitCurrentPurchase(
+ 		  model.getHistoryTableModel().addItem(domainController.submitCurrentPurchase(
  				  model.getCurrentPurchaseTableModel().getTableRows()
- 				  );
+ 				  ));
  		  endSale();
  		  model.getCurrentPurchaseTableModel().clear();
  		  log.info("Payment successful");
@@ -363,7 +363,7 @@ public class PurchaseTab {
 					}
 				}
 				catch (Exception f) {
-					
+					log.info("An exception occured when trying to accept the payment");
 				}
 			}
 		});
