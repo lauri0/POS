@@ -217,10 +217,15 @@ public class PurchaseItemPanel extends JPanel {
 				quantity = Integer.parseInt(quantityField.getText());
 				// if inserted quantity is higher than in the warehouse
 				// product is not added to the cart, warning is shown -Kristine
-				if (quantity > stockItem.getQuantity()) {
+				if (quantity < 0) {
+					showNegativeQuantityWarning();
+					reset();
+				}
+				else if (quantity > stockItem.getQuantity()) {
 					showQuantityWarning();
 					reset();
-				} else {
+				} 
+				else {
 					model.getCurrentPurchaseTableModel().addItem(
 							new SoldItem(stockItem, quantity));
 					// Warehouse quantity is reduced -Kristine
@@ -249,6 +254,16 @@ public class PurchaseItemPanel extends JPanel {
 		warningMessageBox.setBounds(550, 350, 180, 100);
 		warningMessageBox.setVisible(true);
 
+	}
+	
+	public void showNegativeQuantityWarning() {
+		JDialog warningMessageBox = new JDialog();
+		warningMessageBox.setAlwaysOnTop(true);
+		warningMessageBox.setTitle("Warning");
+		warningMessageBox.add(new JLabel("<html><center>Can't buy a negative quantity "
+				+ "of a product</html>"));
+		warningMessageBox.setBounds(550, 350, 180, 100);
+		warningMessageBox.setVisible(true);
 	}
 
 	/**
