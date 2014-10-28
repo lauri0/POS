@@ -359,6 +359,7 @@ public class PurchaseTab {
 				try {
 					if (Integer.parseInt(paymentAmountField.getText()) >= finalTotalSum) {
 						changeLabel.setText(Integer.toString(Integer.parseInt(paymentAmountField.getText()) - finalTotalSum));
+						paymentAmountField.setEditable(false);
 						allowClosePayment(closePaymentButton, acceptPaymentButton);
 					}
 					else {

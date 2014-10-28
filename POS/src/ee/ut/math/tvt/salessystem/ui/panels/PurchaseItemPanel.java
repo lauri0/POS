@@ -28,7 +28,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
- * Purchase pane + shopping cart tabel UI.
+ * Purchase pane + shopping cart table UI.
  */
 public class PurchaseItemPanel extends JPanel {
 
@@ -165,6 +165,10 @@ public class PurchaseItemPanel extends JPanel {
 			dropDownMenu.addItem(stockItem.getName());
 		}
 
+	}
+	
+	public void addToDropDownMenu(StockItem stockItem) {
+		dropDownMenu.addItem(stockItem.getName());
 	}
 
 	// Fill dialog with data from the "database".
