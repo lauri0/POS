@@ -213,7 +213,7 @@ element. -->
 <!ELEMENT log4j:locationInfo EMPTY>
 <!ATTLIST log4j:locationInfo
   class  CDATA	#REQUIRED
-  method CDATA	#REQUIRED<	
+  method CDATA	#REQUIRED
   file   CDATA	#REQUIRED
   line   CDATA	#REQUIRED
 >

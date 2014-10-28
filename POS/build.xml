@@ -20,7 +20,7 @@
 		</fileset>
 	</path>
 
-	<path id="test.classpath">
+	<path id="run.classpath">
 		<pathelement location="${build.classes.dir}"/>
 		<!-- configuration -->
 		<pathelement location="${conf.dir}"/>
@@ -36,12 +36,19 @@
 
 	<!-- Run -->
 	<target name="run" depends="build" description="Run the application from class">
-			<java classname="ee.ut.math.tvt.electricsheep.Intro" classpathref="test.classpath" fork="yes" />
-		</target>
+		<java 
+			classname="ee.ut.math.tvt.electricsheep.Intro" 
+			classpathref="run.classpath" 
+			fork="yes">
+			<!--
+			<jvmarg value="-Xdebug"/>
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"/> -->
+		</java>
+	</target>
 	
 	<!-- jrun -->
 	<target name="jrun" depends="dist" description="Run the application from jar">
-		<java jar="${jar.dir}/ElectricSheep.jar" classpathref="test.classpath" fork="yes" />
+		<java jar="${jar.dir}/ElectricSheep.jar" classpathref="run.classpath" fork="yes" />
 	</target>
 	
 	<!-- Build -->
@@ -90,6 +97,61 @@
 		</jar>
 	</target>
 	
-
+	<!-- Commit -->
+	<target name="git_commit">
+		<input
+			message="Please enter the commit comment:"
+			addproperty="commit.comment"
+			defaultvalue="No comment."
+		/>
+		<input 
+			message="Please enter your github username:"
+			addproperty="commit.username"
+		/>
+		<input
+			message="Please enter your github password:"
+			addproperty="commit.password"
+		/>
+		<exec executable="cmd">
+			<arg value='/c'/>
+			<arg value='git add -A'/>
+		</exec>
+		<exec executable="cmd">
+			<arg value='/c'/>
+			<arg value='git commit -m "${commit.comment}"'/>
+		</exec>
+		<exec executable="cmd">
+			<arg value='/c'/>
+			<arg value='git push https://${commit.username}:${commit.password}@github.com/lauri0/POS.git'/>
+		</exec>
+	</target>
+	
+	<!-- Tag -->
+	<target name="git_tag">
+		<input
+			message="Please enter the tag name:"
+			addproperty="tag.name"
+		/>
+		<input
+			message="Please enter the tag comment:"
+			addproperty="tag.comment"
+		/>
+		<input 
+			message="Please enter your github username:"
+			addproperty="tag.username"
+		/>
+		<input
+			message="Please enter your github password:"
+			addproperty="tag.password"
+		/>
+		<exec executable="cmd">
+			<arg value='/c'/>
+			<arg value='git tag -a ${tag.name} -m "${tag.comment}"'/>
+		</exec>
+		<exec executable="cmd">
+			<arg value='/c'/>
+			<arg value='git push https://${tag.username}:${tag.password}@github.com/lauri0/POS.git --tags'/>
+		</exec>
+	</target>
 </project>
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.Purchase;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
@@ -13,11 +14,19 @@ import ee.ut.math.tvt.salessystem.domain.data.StockItem;
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
 	
-	public void submitCurrentPurchase(List<SoldItem> goods) throws VerificationFailedException {
-		// Let's assume we have checked and found out that the buyer is underaged and
-		// cannot buy chupa-chups
-		throw new VerificationFailedException("Underaged!");
+	// A method that returns a Purchase type object - Lauri
+	public Purchase submitCurrentPurchase(List<SoldItem> goods, long id) 
+			throws VerificationFailedException {
 		// XXX - Save purchase
+		// Find the total price of bought goods
+		double sum = 0;
+		for (SoldItem item : goods) {
+			sum += item.getSum();
+		}
+		// Using a cast
+		ArrayList<SoldItem> goodsList = (ArrayList<SoldItem>) goods;
+		Purchase purchase = new Purchase(goodsList, sum, id);
+		return purchase;
 	}
 
 	public void cancelCurrentPurchase() throws VerificationFailedException {				
@@ -45,4 +54,15 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		
 		return dataset;
 	}
+	
+/*	public List<Purchase> loadHistoryState() {
+		// Placeholder implementation - Lauri
+		List<Purchase> data = new ArrayList<Purchase>();
+		
+		Purchase testPurchase = new Purchase();
+		
+		data.add(testPurchase);
+		
+		return data;
+	}*/
 }

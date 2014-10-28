@@ -28,7 +28,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
- * Purchase pane + shopping cart tabel UI.
+ * Purchase pane + shopping cart table UI.
  */
 public class PurchaseItemPanel extends JPanel {
 
@@ -166,6 +166,10 @@ public class PurchaseItemPanel extends JPanel {
 		}
 
 	}
+	
+	public void addToDropDownMenu(StockItem stockItem) {
+		dropDownMenu.addItem(stockItem.getName());
+	}
 
 	// Fill dialog with data from the "database".
 	public void fillDialogFields() {
@@ -217,14 +221,18 @@ public class PurchaseItemPanel extends JPanel {
 				quantity = Integer.parseInt(quantityField.getText());
 				// if inserted quantity is higher than in the warehouse
 				// product is not added to the cart, warning is shown -Kristine
-				if (quantity > stockItem.getQuantity()) {
+				if (quantity < 0) {
+					showNegativeQuantityWarning();
+					reset();
+				}
+				else if (quantity > stockItem.getQuantity()) {
 					showQuantityWarning();
 					reset();
-				} else {
+				} 
+				else {
 					model.getCurrentPurchaseTableModel().addItem(
 							new SoldItem(stockItem, quantity));
-					// Warehouse quantity is reduced -Kristine
-					stockItem.setQuantity(stockItem.getQuantity() - quantity);
+					
 				}
 				// If incorrect data is inserted -Kristine
 			} catch (NumberFormatException ex) {
@@ -249,6 +257,16 @@ public class PurchaseItemPanel extends JPanel {
 		warningMessageBox.setBounds(550, 350, 180, 100);
 		warningMessageBox.setVisible(true);
 
+	}
+	
+	public void showNegativeQuantityWarning() {
+		JDialog warningMessageBox = new JDialog();
+		warningMessageBox.setAlwaysOnTop(true);
+		warningMessageBox.setTitle("Warning");
+		warningMessageBox.add(new JLabel("<html><center>Can't buy a negative quantity "
+				+ "of a product</html>"));
+		warningMessageBox.setBounds(550, 350, 180, 100);
+		warningMessageBox.setVisible(true);
 	}
 
 	/**
