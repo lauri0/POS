@@ -191,12 +191,13 @@ public class PurchaseTab {
  				  model.getCurrentPurchaseTableModel().getTableRows(), id
  				  ));
  		  endSale();
+
  		  // Warehouse quantity is reduced -Kristine
  		  List<SoldItem> soldItems = model.getCurrentPurchaseTableModel().getTableRows();
  		  for (SoldItem soldItem : soldItems) {
  			 soldItem.getStockItem().setQuantity(soldItem.getStockItem().getQuantity() - soldItem.getQuantity());
 		}
-		  
+
  		  model.getCurrentPurchaseTableModel().clear();
  		  log.info("Payment successful");
  	  } 

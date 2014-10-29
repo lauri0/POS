@@ -134,13 +134,7 @@ public class StockTab {
 					model.getWarehouseTableModel().addItem(stockItem);
 					// If incorrect data is inserted
 				} catch (Exception _) {
-					JDialog warningMessageBox = new JDialog();
-					warningMessageBox.setAlwaysOnTop(true);
-					warningMessageBox.setTitle("Warning");
-					warningMessageBox.add(new JLabel("<html><center>Oops<br>"
-							+ "Incorrect data!</center></html>"));
-					warningMessageBox.setBounds(550, 350, 180, 100);
-					warningMessageBox.setVisible(true);
+					drawWarningMessage();
 				}
 
 				barCodeField.setText("");
@@ -211,13 +205,7 @@ public class StockTab {
 					model.getWarehouseTableModel().addItem(stockItem);
 					// If incorrect data is inserted
 				} catch (Exception _) {
-					JDialog warningMessageBox = new JDialog();
-					warningMessageBox.setAlwaysOnTop(true);
-					warningMessageBox.setTitle("Warning");
-					warningMessageBox.add(new JLabel("<html><center>Oops<br>"
-							+ "Incorrect data!</center></html>"));
-					warningMessageBox.setBounds(550, 350, 180, 100);
-					warningMessageBox.setVisible(true);
+					drawWarningMessage();
 				}
 
 				barCodeField.setText("");
@@ -239,7 +227,16 @@ public class StockTab {
 		addProductWindow.setVisible(true);
 
 	}
-
+	// draws warning message
+	private void drawWarningMessage(){
+		JDialog warningMessageBox = new JDialog();
+		warningMessageBox.setAlwaysOnTop(true);
+		warningMessageBox.setTitle("Warning");
+		warningMessageBox.add(new JLabel("<html><center>Oops<br>"
+				+ "Incorrect data!</center></html>"));
+		warningMessageBox.setBounds(550, 350, 180, 100);
+		warningMessageBox.setVisible(true);
+	}
 	// table of the warehouse stock
 	private Component drawStockMainPane() {
 		JPanel panel = new JPanel();
