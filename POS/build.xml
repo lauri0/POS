@@ -51,6 +51,13 @@
 		<java jar="${jar.dir}/ElectricSheep.jar" classpathref="run.classpath" fork="yes" />
 	</target>
 	
+	<!-- runc -->
+	<target name="runc" depends="build" description="Run the application (console)">
+		<java classname="ee.ut.math.tvt.[team].Intro" classpathref="test.classpath" fork="yes">
+			<arg value="console" />
+		</java>
+	</target>
+	
 	<!-- Build -->
 	<target name="build" depends="clean" description="Build the system">
 		<mkdir dir="${build.dir}"/>
