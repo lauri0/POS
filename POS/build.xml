@@ -39,6 +39,9 @@
 	        <fileset dir="${lib.dir}">
 	            <include name="*.jar"/>
 	        </fileset>
+	        <fileset dir="${lib.hibernate.dir}">
+	             <include name="*.jar"/>
+	        </fileset>
 	</path>
 	
 	<target name="dbmanager" description="Start the HSQLDB manager">
