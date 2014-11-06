@@ -18,6 +18,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
@@ -76,7 +77,8 @@ public class OrderDetailsUI extends JFrame {
 				tableModel.addItem(item);
 			}
 			final JTable table = new JTable(tableModel);
-			this.add(table);
+			final JScrollPane scrollPane = new JScrollPane(table);
+			this.add(scrollPane);
 			
 		}
 		catch (Exception e) {
