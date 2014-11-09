@@ -99,6 +99,7 @@
 		<mkdir dir="${build.classes.dir}"/>
 		<copy file="${basedir}/version.properties" todir="${build.classes.dir}"/>
 		<copy file="${basedir}/application.properties" todir="${build.classes.dir}"/>
+		<copy file="${basedir}/conf/hibernate.cfg.xml" todir="${build.classes.dir}"/>
 		<copy todir="${build.classes.dir}">
 			<fileset dir="${resources.dir}"/>
 		</copy>

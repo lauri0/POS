@@ -2,24 +2,17 @@ package ee.ut.math.tvt.salessystem.ui;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
-import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.domain.data.Purchase;
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;import ee.ut.math.tvt.salessystem.domain.data.Purchase;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
-import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
-import ee.ut.math.tvt.salessystem.ui.tabs.StockTab;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
+
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
