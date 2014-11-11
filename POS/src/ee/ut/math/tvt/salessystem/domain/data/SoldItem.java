@@ -1,20 +1,49 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+
 
 
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving history. 
  */
+@Entity
+@Table(name="SOLDITEM")
 public class SoldItem implements Cloneable, DisplayableItem {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private StockItem stockItem;
     
+	@Column(name = "NAME")
     private String name;
+	
+	@Column(name = "QUANTITY")
     private Integer quantity;
+	
+	@Column(name = "PRICE")
     private double price;
     
-    public SoldItem(StockItem stockItem, int quantity) {
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "STOCKITEM_ID", unique = true, nullable = false, updatable = false)
+    private StockItem stockItem;
+    
+    public SoldItem() {
+    	
+    }
+	
+	public SoldItem(StockItem stockItem, int quantity) {
         this.stockItem = stockItem;
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
