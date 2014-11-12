@@ -7,14 +7,18 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.StockTab;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -40,7 +44,7 @@ public class SalesSystemUI extends JFrame {
    * Constructs sales system GUI.
    * @param domainController Sales domain controller.
    */
-  public SalesSystemUI(SalesDomainController domainController) {
+  public SalesSystemUI(final SalesDomainController domainController) {
     this.domainController = domainController;
     this.model = new SalesSystemModel(domainController);
 
@@ -71,7 +75,9 @@ public class SalesSystemUI extends JFrame {
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
-        System.exit(0);
+          log.info("Window closed");
+          domainController.endSession();
+          System.exit(0);
       }
     });
   }

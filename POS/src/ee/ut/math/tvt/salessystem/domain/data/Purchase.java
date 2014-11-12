@@ -4,16 +4,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+
 
 /**
  * Purchase that can be stored and displayed on the history tab. - Lauri
  */
+@Entity
+@Table(name="PURCHASE")
 public class Purchase implements Cloneable, DisplayableItem {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Column(name = "PURCHASE_DATE")
     private String pdate;
+	
+	@Column(name = "PURCHASE_TIME")
     private String ptime;
+	
+	@Column(name = "TOTAL_PRICE")
     private double totalPrice;
+	
+	// Probably needs an annotation
     private ArrayList<SoldItem> soldItems;
     
     public Purchase(ArrayList<SoldItem> soldItems, double totalPrice, long id) {
