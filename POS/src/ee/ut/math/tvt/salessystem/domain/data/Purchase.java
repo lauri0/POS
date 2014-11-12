@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.domain.data;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +34,8 @@ public class Purchase implements Cloneable, DisplayableItem {
 	@Column(name = "TOTAL_PRICE")
     private double totalPrice;
 	
-    private ArrayList<SoldItem> soldItems;
+	@OneToMany(mappedBy = "purchase")
+    private List<SoldItem> soldItems;
     
     public Purchase() {
     	
@@ -48,6 +50,13 @@ public class Purchase implements Cloneable, DisplayableItem {
         this.ptime = timeFormat.format(date);
         this.totalPrice = totalPrice;
         this.soldItems = soldItems;
+    }
+    
+    public Purchase(long id, String pdate, String ptime, double totalPrice) {
+    	this.id = id;
+    	this.pdate = pdate;
+    	this.ptime = ptime;
+    	this.totalPrice = totalPrice;
     }
     
     public Long getId() {
@@ -82,7 +91,7 @@ public class Purchase implements Cloneable, DisplayableItem {
         this.totalPrice = totalPrice;
     }
 
-    public ArrayList<SoldItem> getSoldItems() {
+    public List<SoldItem> getSoldItems() {
         return soldItems;
     }
     

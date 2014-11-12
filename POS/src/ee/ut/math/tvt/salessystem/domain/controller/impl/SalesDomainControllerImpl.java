@@ -83,6 +83,29 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		return dataset;
 	}
 	
+	public List<Purchase> loadHistoryState() {
+		List<Purchase> dataset = new ArrayList<Purchase>();
+		
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.currentSession().beginTransaction();
+			List purchaseList = HibernateUtil.currentSession().createQuery("from Purchase").list();
+			for (Iterator iterator = purchaseList.iterator(); iterator.hasNext();) {
+				Purchase purchase = (Purchase) iterator.next();
+				dataset.add(purchase);
+			}
+			tx.commit();
+		}
+		catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+		}
+		
+		return dataset;
+	}
+	
 	public void endSession() {
 	    HibernateUtil.closeSession();
 	    log.info("Session closed.");
