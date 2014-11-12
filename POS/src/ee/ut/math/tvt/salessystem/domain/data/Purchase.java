@@ -33,8 +33,11 @@ public class Purchase implements Cloneable, DisplayableItem {
 	@Column(name = "TOTAL_PRICE")
     private double totalPrice;
 	
-	// Probably needs an annotation
     private ArrayList<SoldItem> soldItems;
+    
+    public Purchase() {
+    	
+    }
     
     public Purchase(ArrayList<SoldItem> soldItems, double totalPrice, long id) {
     	this.id = id;
@@ -49,6 +52,10 @@ public class Purchase implements Cloneable, DisplayableItem {
     
     public Long getId() {
     	return id;
+    }
+    
+    public void setId(long id) {
+    	this.id = id;
     }
     
     public String getDate() {
@@ -78,9 +85,8 @@ public class Purchase implements Cloneable, DisplayableItem {
     public ArrayList<SoldItem> getSoldItems() {
         return soldItems;
     }
-
-    public void setStockItem(ArrayList<SoldItem> soldItems) {
-        this.soldItems = soldItems;
-    }
     
+    public void setSoldItems(ArrayList<SoldItem> soldItems) {
+    	this.soldItems = soldItems;
+    }    
 }

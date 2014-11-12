@@ -33,7 +33,7 @@ public class HibernateUtil {
 		}
 	}
 
-	private static Session session;
+	public static Session session;
 
 	public static Session currentSession() throws HibernateException {
 		// Open a new Session, if this thread has none yet
