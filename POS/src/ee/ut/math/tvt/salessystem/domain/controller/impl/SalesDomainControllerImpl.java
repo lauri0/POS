@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -21,6 +23,7 @@ import ee.ut.math.tvt.salessystem.util.HibernateUtil;
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
 	private static final Logger log = Logger.getLogger(SalesDomainControllerImpl.class);
+	private static SessionFactory factory;
 	
 	// A method that returns a Purchase type object - Lauri
 	public Purchase submitCurrentPurchase(List<SoldItem> goods, long id) 
@@ -107,7 +110,24 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	}
 	
 	public void endSession() {
+		
 	    HibernateUtil.closeSession();
 	    log.info("Session closed.");
+	}
+	
+	public Integer addStockItem(Long id, String name, String desc, double price, int quantity){
+		Session session = HibernateUtil.currentSession();
+		Transaction tx = null;
+		Integer itemID = null;
+		try{
+			tx = session.beginTransaction();
+			StockItem stockitem = new StockItem(id, desc, name, price, quantity);
+			itemID = (Integer) session.save(stockitem);
+			tx.commit();
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			log.error(e);
+		}
+		return itemID;
 	}
 }

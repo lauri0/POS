@@ -53,4 +53,5 @@ public interface SalesDomainController {
 
     public void endSession();
     
+    public Integer addStockItem(Long id, String name, String desc, double price, int quantity);
 }

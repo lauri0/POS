@@ -45,8 +45,15 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.price = price;
     }
     
-    public StockItem(Long id, String name, String desc, double price, int quantity) {
+    public StockItem(Long id, String desc, String name, double price, int quantity) {
         this.id = id;
+        this.name = name;
+        this.description = desc;
+        this.price = price;
+        this.quantity = quantity;
+    }
+    
+    public StockItem(String name, String desc, double price, int quantity) {
         this.name = name;
         this.description = desc;
         this.price = price;

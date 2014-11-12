@@ -50,4 +50,8 @@ public class SalesSystemModel {
         return currentPurchaseTableModel;
     }
     
+    public SalesDomainController getDomainController(){
+    	return domainController;
+    }
+    
 }

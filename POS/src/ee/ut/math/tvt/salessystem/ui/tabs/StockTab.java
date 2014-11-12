@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -197,12 +198,26 @@ public class StockTab {
 		addItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					StockItem stockItem = new StockItem(Long
+					/*StockItem stockItem = new StockItem(Long
+							.parseLong(barCodeField.getText()), nameField
+							.getText(), descriptionField.getText(), Double
+							.parseDouble(priceField.getText()), Integer
+							.parseInt(quantityField.getText()));*/
+					System.out.println(Long
+							.parseLong(barCodeField.getText()));
+					System.out.println(nameField
+							.getText());
+					model.getDomainController().addStockItem(Long
 							.parseLong(barCodeField.getText()), nameField
 							.getText(), descriptionField.getText(), Double
 							.parseDouble(priceField.getText()), Integer
 							.parseInt(quantityField.getText()));
-					model.getWarehouseTableModel().addItem(stockItem);
+					/*model.getWarehouseTableModel().addItem(stockItem);*/
+					List <StockItem> si = model.getDomainController().loadWarehouseState();
+					for(StockItem item: si){
+						model.getWarehouseTableModel().addItem(item);
+					}
+					
 					// If incorrect data is inserted
 				} catch (Exception _) {
 					drawWarningMessage();
