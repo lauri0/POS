@@ -198,20 +198,12 @@ public class StockTab {
 		addItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					/*StockItem stockItem = new StockItem(Long
-							.parseLong(barCodeField.getText()), nameField
-							.getText(), descriptionField.getText(), Double
-							.parseDouble(priceField.getText()), Integer
-							.parseInt(quantityField.getText()));*/
-					System.out.println(Long
-							.parseLong(barCodeField.getText()));
-					System.out.println(nameField
-							.getText());
-					model.getDomainController().addStockItem(Long
+					StockItem stockItem = new StockItem(Long
 							.parseLong(barCodeField.getText()), nameField
 							.getText(), descriptionField.getText(), Double
 							.parseDouble(priceField.getText()), Integer
 							.parseInt(quantityField.getText()));
+					model.getDomainController().addStockItem(stockItem);
 					/*model.getWarehouseTableModel().addItem(stockItem);*/
 					List <StockItem> si = model.getDomainController().loadWarehouseState();
 					for(StockItem item: si){

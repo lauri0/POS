@@ -115,19 +115,18 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	    log.info("Session closed.");
 	}
 	
-	public Integer addStockItem(Long id, String name, String desc, double price, int quantity){
-		Session session = HibernateUtil.currentSession();
+	public void addStockItem(StockItem stockitem){
+		Session sess = HibernateUtil.currentSession(); 
+				/*HibernateUtil.currentSession();*/
 		Transaction tx = null;
 		Integer itemID = null;
 		try{
-			tx = session.beginTransaction();
-			StockItem stockitem = new StockItem(id, desc, name, price, quantity);
-			itemID = (Integer) session.save(stockitem);
+			tx = sess.beginTransaction();
+			sess.save(stockitem);
 			tx.commit();
 		}catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
 			log.error(e);
 		}
-		return itemID;
 	}
 }
