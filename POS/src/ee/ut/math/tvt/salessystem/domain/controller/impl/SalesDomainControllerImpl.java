@@ -142,6 +142,19 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		}
 	}
 	
+	public void addSoldItem(SoldItem solditem) {
+		Session sess = HibernateUtil.currentSession();
+		Transaction tx = null;
+		try{
+			tx = sess.beginTransaction();
+			sess.save(solditem);
+			tx.commit();
+		}catch(HibernateException e){
+			if (tx!=null) tx.rollback();
+			log.error(e);
+		}
+	}
+	
 	public void updateStockItem(Long id, int quantity){
 		Session sess = HibernateUtil.currentSession();
 		Transaction tx = null;

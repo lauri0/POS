@@ -194,6 +194,10 @@ public class PurchaseTab {
  		  Purchase pur = domainController.submitCurrentPurchase(
  				  model.getCurrentPurchaseTableModel().getTableRows(), id);
  		  domainController.addPurchase(pur);
+ 		  List<SoldItem> sitem = pur.getSoldItems();
+ 		  for (SoldItem item : sitem) {
+ 			  domainController.addSoldItem(item);
+ 		  }
  		  endSale();
 
  		  // Warehouse quantity is reduced -Kristine
