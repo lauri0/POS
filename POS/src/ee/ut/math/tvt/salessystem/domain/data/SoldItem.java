@@ -32,7 +32,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@Column(name = "QUANTITY")
     private Integer quantity;
 	
-	@Column(name = "PRICE")
+	@Column(name = "ITEMPRICE")
     private double price;
     
 	@OneToOne
@@ -41,7 +41,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
     private StockItem stockItem;
     
 	@ManyToOne
-	@JoinColumn(name = "PURCHASE_ID", nullable = true)
+	@MapsId
+	@JoinColumn(name = "SALE_ID", nullable = true)
 	private Purchase purchase;
 	
     public SoldItem() {
