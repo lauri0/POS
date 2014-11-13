@@ -141,4 +141,20 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 			log.error(e);
 		}
 	}
+	
+	public void updateStockItem(Long id, int quantity){
+		Session sess = HibernateUtil.currentSession();
+		Transaction tx = null;
+		try{
+			tx = sess.beginTransaction();
+			StockItem stockitem = (StockItem)sess.get(StockItem.class, id);
+			int olemasolevkvant = stockitem.getQuantity();
+			stockitem.setQuantity(olemasolevkvant + quantity);
+			sess.update(stockitem);
+			tx.commit();
+		}catch(HibernateException e){
+			if (tx!=null) tx.rollback();
+			log.error(e);
+		}
+	}
 }

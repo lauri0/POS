@@ -129,10 +129,16 @@ public class StockTab {
 					model.getWarehouseTableModel().getItemById(Long
 							.parseLong(barCodeField.getText()));
 					// Adds items
-					StockItem stockItem = new StockItem(Long
+					/*StockItem stockItem = new StockItem(Long
 							.parseLong(barCodeField.getText()), "", "",1, Integer
 							.parseInt(quantityField.getText()));
-					model.getWarehouseTableModel().addItem(stockItem);
+					model.getWarehouseTableModel().addItem(stockItem);*/
+					model.getDomainController().updateStockItem(Long
+							.parseLong(barCodeField.getText()),Integer
+							.parseInt(quantityField.getText()));
+					
+					List <StockItem> si = model.getDomainController().loadWarehouseState();
+					model.getWarehouseTableModel().populateWithData(si);
 					// If incorrect data is inserted
 				} catch (Exception _) {
 					drawWarningMessage();
@@ -206,9 +212,7 @@ public class StockTab {
 					model.getDomainController().addStockItem(stockItem);
 					/*model.getWarehouseTableModel().addItem(stockItem);*/
 					List <StockItem> si = model.getDomainController().loadWarehouseState();
-					for(StockItem item: si){
-						model.getWarehouseTableModel().addItem(item);
-					}
+					model.getWarehouseTableModel().populateWithData(si);
 					
 					// If incorrect data is inserted
 				} catch (Exception _) {

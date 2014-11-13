@@ -57,4 +57,5 @@ public interface SalesDomainController {
     
     public void addPurchase(Purchase purchase);
     
+    public void updateStockItem(Long id, int quantity);
 }
