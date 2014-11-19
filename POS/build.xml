@@ -5,7 +5,9 @@
 	<property file="build.properties"/>
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="build.classes.dir" value="${build.dir}/classes"/>
+	<property name="build.test.dir"       value="${build.dir}/test"/>
 	<property name="src.dir" value="${basedir}/src"/>
+	<property name="test.dir"   value="${basedir}/test"/>
 	<property name="dist.dir" value="${basedir}/dist"/>
 	<property name="conf.dir" value="${basedir}/etc"/>
 	<property name="doc.dir" value="${build.dir}/doc"/>
@@ -43,6 +45,20 @@
 	             <include name="*.jar"/>
 	        </fileset>
 	</path>
+	
+	<path id="test-classpath">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar"/>
+			</fileset>
+		    <pathelement path="${build.classes.dir}/" />
+			<pathelement path="${build.test.dir}/" />
+		</path>
+	
+	<path id="libs">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar"/>
+			</fileset>
+		</path>
 	
 	<target name="dbmanager" description="Start the HSQLDB manager">
 	        <java
@@ -97,6 +113,7 @@
 	<target name="build" depends="clean" description="Build the system">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${build.classes.dir}"/>
+		<mkdir dir="${build.test.dir}"/>
 		<copy file="${basedir}/version.properties" todir="${build.classes.dir}"/>
 		<copy file="${basedir}/application.properties" todir="${build.classes.dir}"/>
 		<copy file="${basedir}/conf/hibernate.cfg.xml" todir="${build.classes.dir}"/>
@@ -196,5 +213,37 @@
 			<arg value='git push https://${tag.username}:${tag.password}@github.com/lauri0/POS.git --tags'/>
 		</exec>
 	</target>
+	
+	<target name="build-tests" depends="build" description="Build the system">
+			<javac
+	            srcdir="${test.dir}"
+	            destdir="${build.test.dir}"
+	            debug="true"
+	            debuglevel="lines,vars,source"
+	            encoding="utf-8"
+	            compiler="modern"
+	            target="1.5"
+	            source="1.5"
+	        	classpathref="libs"
+	        >
+				<classpath>
+					<pathelement path="${build.classes.dir}" />
+				</classpath>
+			</javac>
+		</target>
+	
+	<target name="test" depends="build-tests" description="Run the template application">
+
+			<junit>
+				<classpath refid="test-classpath" />
+
+				<formatter type="brief" usefile="false" />
+				<batchtest>
+					<fileset dir="${build.test.dir}" includes="**/*.class" />
+				</batchtest>
+			</junit>
+
+
+		</target>
 </project>
 

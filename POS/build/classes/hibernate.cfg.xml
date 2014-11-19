@@ -12,6 +12,7 @@
         <property name="connection.url">jdbc:hsqldb:hsql://localhost/POS</property>
         <property name="connection.username">sa</property>
         <property name="connection.password"></property>
+        <property name="connection.autocommit">true</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
@@ -25,7 +26,7 @@
         <mapping package="ee.ut.math.tvt.salessystem.domain.data"/>
         
         <mapping class="ee.ut.math.tvt.salessystem.domain.data.SoldItem"/>
-        <mapping class="ee.ut.math.tvt.salessystem.domain.data.StockItem"/>
+        <mapping class="ee.ut.math.tvt.salessystem.domain.data.StockItem"/><mapping class="ee.ut.math.tvt.salessystem.domain.data.Purchase"/>
 
     </session-factory>
 

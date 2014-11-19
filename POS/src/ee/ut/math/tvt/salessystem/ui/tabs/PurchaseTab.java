@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.Purchase;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -190,6 +191,13 @@ public class PurchaseTab {
  		  model.getHistoryTableModel().addItem(domainController.submitCurrentPurchase(
  				  model.getCurrentPurchaseTableModel().getTableRows(), id
  				  ));
+ 		  Purchase pur = domainController.submitCurrentPurchase(
+ 				  model.getCurrentPurchaseTableModel().getTableRows(), id);
+ 		  domainController.addPurchase(pur);
+ 		  List<SoldItem> sitem = pur.getSoldItems();
+ 		  for (SoldItem item : sitem) {
+ 			  domainController.addSoldItem(item);
+ 		  }
  		  endSale();
 
  		  // Warehouse quantity is reduced -Kristine

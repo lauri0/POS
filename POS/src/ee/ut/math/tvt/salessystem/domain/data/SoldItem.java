@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -31,7 +32,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@Column(name = "QUANTITY")
     private Integer quantity;
 	
-	@Column(name = "PRICE")
+	@Column(name = "ITEMPRICE")
     private double price;
     
 	@OneToOne
@@ -39,6 +40,11 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@JoinColumn(name = "STOCKITEM_ID", unique = true, nullable = false, updatable = false)
     private StockItem stockItem;
     
+	@ManyToOne
+	@MapsId
+	@JoinColumn(name = "SALE_ID", nullable = true)
+	private Purchase purchase;
+	
     public SoldItem() {
     	
     }
@@ -96,4 +102,11 @@ public class SoldItem implements Cloneable, DisplayableItem {
         this.stockItem = stockItem;
     }
     
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
 }

@@ -29,7 +29,7 @@ public interface SalesDomainController {
      * @throws VerificationFailedException
      */
     
-//    public List<Purchase> loadHistoryState();
+    public List<Purchase> loadHistoryState();
     
     public void startNewPurchase() throws VerificationFailedException;
 
@@ -53,4 +53,11 @@ public interface SalesDomainController {
 
     public void endSession();
     
+    public void addStockItem(StockItem stockitem);
+    
+    public void addPurchase(Purchase purchase);
+    
+	public void addSoldItem(SoldItem solditem);
+    
+    public void updateStockItem(Long id, int quantity);
 }
