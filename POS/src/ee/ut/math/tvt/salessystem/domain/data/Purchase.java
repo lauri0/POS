@@ -59,6 +59,23 @@ public class Purchase implements Cloneable, DisplayableItem {
     	this.totalPrice = totalPrice;
     }
     
+    public Purchase(ArrayList<SoldItem> soldItems, long id) {
+    	this.id = id;
+    	Date date = new Date();
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        this.pdate = dateFormat.format(date);
+        this.ptime = timeFormat.format(date);
+        
+        this.soldItems = soldItems;
+     // Find the total sum of the order
+        
+        double totalSum = 0;
+        for (SoldItem item : soldItems) {
+                totalSum += item.getSum();
+        }
+        this.totalPrice = totalSum;
+    }
     public Long getId() {
     	return id;
     }
