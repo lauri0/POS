@@ -15,7 +15,7 @@ public class StockTableModelTest {
 		stockitem = new StockItem((long) 32, "Kosmonaut",
 				"Eesti olu", 4.5);
 		stockitem = new StockItem((long) 33, "Kosmonaut",
-				"Eesti olu", 4.5);
+				"Eesti olu", 4.5, 10);
 	}
 	// ??
 	@Test
@@ -31,9 +31,13 @@ public class StockTableModelTest {
 		}
 	}
 	
-	// What does that mean?
+	// Tegin siia midagi, ei ole kindel, kas see on päris õige. --Markus
 	@Test
 	public void testHasEnoughInStock(){
+		StockTableModel stocktablemodel = new StockTableModel();
+		stocktablemodel.addItem(stockitem2);
+		int quantity = 10;
+		Assert.assertTrue(stocktablemodel.hasEnoughInStock(quantity,stockitem2));
 		
 	}
 	
