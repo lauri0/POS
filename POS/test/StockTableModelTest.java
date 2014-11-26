@@ -14,7 +14,7 @@ public class StockTableModelTest {
 	public void setUp() {
 		stockitem = new StockItem((long) 32, "Kosmonaut",
 				"Eesti olu", 4.5);
-		stockitem = new StockItem((long) 33, "Kosmonaut",
+		stockitem2 = new StockItem((long) 33, "Kosmonaut",
 				"Eesti olu", 4.5, 10);
 	}
 	// ??
