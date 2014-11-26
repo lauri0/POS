@@ -7,6 +7,7 @@ import org.junit.Test;
 import ee.ut.math.tvt.salessystem.domain.data.Purchase;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 
 
@@ -16,6 +17,7 @@ public class PurchaseTest {
 	private SoldItem solditem2;
 	private StockItem item1;
 	private StockItem item2;
+	final SalesDomainController domainController = new SalesDomainControllerImpl();
 	
 	@Before
 	public void setUp() {
@@ -32,8 +34,13 @@ public class PurchaseTest {
 	@Test
 	public void testAddSoldItem(){
 		ArrayList<SoldItem> solditems = new ArrayList<SoldItem>();
-		Purchase purchase = new Purchase(solditems, 1);
-		
+		solditems.add(solditem1);
+		solditems.add(solditem2);
+		for (SoldItem item: solditems){
+			domainController.addSoldItem(item);
+		}
+		Assert.fail();
+
 	}
 	@Test
 	public void testGetSumWithNoItems(){

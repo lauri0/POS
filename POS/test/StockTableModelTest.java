@@ -31,7 +31,7 @@ public class StockTableModelTest {
 		}
 	}
 	
-	// Tegin siia midagi, ei ole kindel, kas see on päris õige. --Markus
+	// Tegin asja --Markus
 	@Test
 	public void testHasEnoughInStock(){
 		StockTableModel stocktablemodel = new StockTableModel();
