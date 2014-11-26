@@ -176,9 +176,6 @@ public class PurchaseTab {
                     + model.getCurrentPurchaseTableModel());
             model.getCurrentPurchaseTableModel().getSale().setSoldItems(
             		new HashSet<SoldItem>(model.getCurrentPurchaseTableModel().getTableRows()));
-//            domainController.submitCurrentPurchase(
-//                    model.getCurrentPurchaseTableModel().getTableRows(),
-//                    model.getSelectedClient());
             domainController.registerSale(model.getCurrentPurchaseTableModel().getSale());
             endSale();
             model.getCurrentPurchaseTableModel().clear();

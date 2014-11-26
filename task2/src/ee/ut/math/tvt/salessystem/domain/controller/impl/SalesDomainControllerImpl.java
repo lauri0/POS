@@ -111,8 +111,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         log.info("New purchase started");
     }
 
-
-
     public void setModel(SalesSystemModel model) {
         this.model = model;
     }

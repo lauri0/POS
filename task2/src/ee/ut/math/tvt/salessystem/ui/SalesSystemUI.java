@@ -1,20 +1,26 @@
 package ee.ut.math.tvt.salessystem.ui;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
+
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.ClientTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.StockTab;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -80,12 +86,26 @@ public class SalesSystemUI extends JFrame {
   }
 
   private void drawWidgets() {
-    JTabbedPane tabbedPane = new JTabbedPane();
+    final JTabbedPane tabbedPane = new JTabbedPane();
 
     tabbedPane.add("Point-of-sale", purchaseTab.draw());
     tabbedPane.add("Warehouse", stockTab.draw());
     tabbedPane.add("History", historyTab.draw());
     tabbedPane.add("Clients", clientTab.draw());
+    
+    tabbedPane.addChangeListener(new ChangeListener() {
+    	public void stateChanged(ChangeEvent e) {
+    		if (tabbedPane.getSelectedIndex() == 1) {
+    			stockTab.refresh(domainController);
+    		}
+    		if (tabbedPane.getSelectedIndex() == 2) {
+    			historyTab.refresh(domainController);
+    		}
+    		if (tabbedPane.getSelectedIndex() == 3) {
+    			clientTab.refresh(domainController);
+    		}
+    	}
+    });
 
     getContentPane().add(tabbedPane);
   }

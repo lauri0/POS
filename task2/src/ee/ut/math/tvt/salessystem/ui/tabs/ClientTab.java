@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -10,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.Client;
 
 
 public class ClientTab {
@@ -65,5 +68,10 @@ public class ClientTab {
         gc.weighty = 1.0;
         return gc;
     }    
+    
+    public void refresh(SalesDomainController domainController) {
+    	List<Client> clients = domainController.getAllClients();
+    	model.getClientTableModel().populateWithData(clients);
+    }
     
 }

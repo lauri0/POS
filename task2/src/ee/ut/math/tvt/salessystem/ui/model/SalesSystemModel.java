@@ -17,7 +17,7 @@ public class SalesSystemModel {
     // Current shopping cart model
     private PurchaseInfoTableModel currentPurchaseTableModel;
 
-    // Puchase history model
+    // Purchase history model
     private PurchaseHistoryTableModel purchaseHistoryTableModel;
 
     private ClientTableModel clientTableModel;
