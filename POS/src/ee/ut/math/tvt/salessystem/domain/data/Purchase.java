@@ -114,5 +114,9 @@ public class Purchase implements Cloneable, DisplayableItem {
     
     public void setSoldItems(ArrayList<SoldItem> soldItems) {
     	this.soldItems = soldItems;
-    }    
+    }
+    
+    public void addSoldItem(SoldItem soldItem) {
+    	this.soldItems.add(soldItem);
+    }
 }

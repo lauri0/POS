@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,8 +40,8 @@ public class PurchaseTest {
 		for (SoldItem item: solditems){
 			domainController.addSoldItem(item);
 		}
-		Assert.fail();
-
+		List<SoldItem> solditems2 = domainController.loadSoldItems();
+		Assert.assertTrue(solditems2.contains(solditem1) && solditems2.contains(solditem2));
 	}
 	@Test
 	public void testGetSumWithNoItems(){

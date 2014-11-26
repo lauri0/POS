@@ -20,6 +20,9 @@ public interface SalesDomainController {
      * @return List of ${link
      *         ee.ut.math.tvt.salessystem.domain.data.StockItem}s.
      */
+	
+	public List<SoldItem> loadSoldItems();
+	
     public List<StockItem> loadWarehouseState();
 
     // business processes
