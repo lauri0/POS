@@ -139,7 +139,6 @@ public class ConsoleUI {
                 }
                 Sale sale = new Sale(selectedClient);
                 sale.setSoldItems(new HashSet<SoldItem>(soldItems));
-                sale.setSellingTime(new Date());
                 dc.registerSale(sale);
                 cart.clear();
             } catch (VerificationFailedException e) {
